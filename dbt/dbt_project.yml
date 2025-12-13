@@ -1,0 +1,48 @@
+# dbt Configuration
+# [TODO: PRODUCTIONIZATION - PHASE 2]
+
+# TODO: Update paths and settings for your environment
+
+config-version: 2
+
+profile: 'nfl_dead_money'
+
+model-paths: ["models"]
+analysis-paths: ["analysis"]
+test-paths: ["tests"]
+data-paths: ["data"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  nfl_dead_money:
+    # Staging layer - clean and standardize raw data
+    staging:
+      +materialized: table
+      +schema: staging
+      tags: ['staging']
+      
+    # Intermediate layer - business logic and joins
+    intermediate:
+      +materialized: table
+      +schema: intermediate
+      tags: ['intermediate']
+      
+    # Mart layer - analytics-ready fact and dimension tables
+    marts:
+      +materialized: table
+      +schema: marts
+      tags: ['mart']
+
+on-run-start: "{{ log('Starting dbt run for NFL dead money data pipeline', info=true) }}"
+on-run-end: "{{ log('Completed dbt run', info=true) }}"
+
+# TODO: Configure seeds, variables, and project-specific settings
+vars:
+  'start_year': 2015
+  'end_year': 2024
+  'data_freshness_hours': 24
