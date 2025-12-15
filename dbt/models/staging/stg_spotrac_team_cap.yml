@@ -1,0 +1,50 @@
+# Staging layer schema for Spotrac team cap
+
+version: 2
+
+models:
+  - name: stg_spotrac_team_cap
+    description: Normalized Spotrac team cap snapshot with dead money and salary cap data
+    columns:
+      - name: team_name
+        description: Full team name
+        tests:
+          - not_null
+      - name: team
+        description: Team code (ARI, ATL, etc.)
+        tests:
+          - not_null
+          - assert_valid_team_code
+      - name: year
+        description: NFL season year
+        tests:
+          - not_null
+      - name: active_cap_millions
+        description: Active salary cap in millions
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 250
+      - name: dead_money_millions
+        description: Dead money cap charge in millions
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: salary_cap_millions
+        description: Total salary cap in millions
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 100
+              max_value: 300
+      - name: cap_space_millions
+        description: Remaining cap space in millions
+      - name: dead_cap_pct
+        description: Dead money as % of total cap
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 50

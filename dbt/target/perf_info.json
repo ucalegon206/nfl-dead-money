@@ -1,0 +1,51 @@
+{
+    "path_count": 145,
+    "parsed_path_count": 145,
+    "static_analysis_path_count": 10,
+    "static_analysis_parsed_path_count": 9,
+    "is_partial_parse_enabled": true,
+    "is_static_analysis_enabled": true,
+    "read_files_elapsed": 0.007527875015512109,
+    "load_macros_elapsed": 0.17446549993474036,
+    "parse_project_elapsed": 0.2585558339487761,
+    "patch_sources_elapsed": 0.010951417032629251,
+    "process_manifest_elapsed": 0.011968540959060192,
+    "load_all_elapsed": 0.4868310410529375,
+    "projects": [
+        {
+            "project_name": "nfl_dead_money",
+            "elapsed": 0.2561767909210175,
+            "parsers": [
+                {
+                    "parser": "model",
+                    "elapsed": 0.07531691598705947,
+                    "parsed_path_count": 10
+                },
+                {
+                    "parser": "test",
+                    "elapsed": 0.09655849996488541,
+                    "parsed_path_count": 4
+                }
+            ],
+            "parsed_path_count": 14
+        },
+        {
+            "project_name": "dbt_postgres",
+            "elapsed": 0.0011756669264286757,
+            "parsers": [],
+            "parsed_path_count": 0
+        },
+        {
+            "project_name": "dbt",
+            "elapsed": 0.0011257089208811522,
+            "parsers": [
+                {
+                    "parser": "doc",
+                    "elapsed": 8.954200893640518e-05,
+                    "parsed_path_count": 1
+                }
+            ],
+            "parsed_path_count": 1
+        }
+    ]
+}

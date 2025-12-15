@@ -1,0 +1,84 @@
+# Mart layer documentation and tests
+
+version: 2
+
+models:
+  - name: dim_teams
+    description: Dimension table of NFL teams with team codes and names
+    columns:
+      - name: team
+        description: Team code (primary key)
+        tests:
+          - unique
+          - not_null
+          - assert_valid_team_code
+      - name: team_name
+        description: Full team name
+        tests:
+          - not_null
+      - name: dbt_created_at
+        description: Timestamp when record was created
+
+  - name: fct_dead_money_by_year
+    description: Fact table of dead money by team and year
+    columns:
+      - name: team
+        description: Team code
+        tests:
+          - not_null
+          - assert_valid_team_code
+      - name: year
+        description: NFL season year
+        tests:
+          - not_null
+      - name: dead_money_millions
+        description: Total dead money in millions
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: salary_cap_millions
+        description: Total salary cap in millions
+      - name: dead_cap_pct
+        description: Dead money as % of cap
+
+  - name: fct_dead_money_by_player
+    description: Fact table of dead money contributions by player, team, and year
+    columns:
+      - name: player_name
+        tests:
+          - not_null
+      - name: team
+        tests:
+          - not_null
+          - assert_valid_team_code
+      - name: year
+        tests:
+          - not_null
+      - name: dead_cap_millions
+        description: Dead cap charge for this player
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 50
+      - name: dead_cap_pct_of_team
+        description: This player's dead cap as % of team total
+      - name: nfl_percentile_rank
+        description: Player's dead cap percentile rank across NFL (0-100)
+
+  - name: fct_dead_money_trend
+    description: Aggregated dead money trend over time (all NFL)
+    columns:
+      - name: year
+        tests:
+          - not_null
+      - name: total_dead_money_millions
+        description: Total NFL dead money in millions
+        tests:
+          - not_null
+      - name: avg_dead_money_per_team
+        description: Average dead money per team
+      - name: max_dead_money_team
+        description: Team with highest dead money that year

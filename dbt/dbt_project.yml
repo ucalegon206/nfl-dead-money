@@ -1,16 +1,15 @@
 # dbt Configuration
-# [TODO: PRODUCTIONIZATION - PHASE 2]
+# NFL Dead Money Pipeline
 
-# TODO: Update paths and settings for your environment
-
+name: 'nfl_dead_money'
+version: '1.0.0'
 config-version: 2
-
 profile: 'nfl_dead_money'
 
 model-paths: ["models"]
-analysis-paths: ["analysis"]
+analysis-paths: ["analyses"]
 test-paths: ["tests"]
-data-paths: ["data"]
+seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 target-path: "target"
@@ -41,7 +40,23 @@ models:
 on-run-start: "{{ log('Starting dbt run for NFL dead money data pipeline', info=true) }}"
 on-run-end: "{{ log('Completed dbt run', info=true) }}"
 
-# TODO: Configure seeds, variables, and project-specific settings
+# Seeds configuration for Spotrac team cap snapshots
+seeds:
+  nfl_dead_money:
+    spotrac_team_cap:
+      +schema: staging
+      +quote_columns: false
+      +column_types:
+        team_name: varchar
+        team: varchar
+        year: int
+        active_cap_millions: numeric
+        dead_money_millions: numeric
+        salary_cap_millions: numeric
+        cap_space_millions: numeric
+        dead_cap_pct: numeric
+
+# TODO: Configure additional variables and project-specific settings
 vars:
   'start_year': 2015
   'end_year': 2024

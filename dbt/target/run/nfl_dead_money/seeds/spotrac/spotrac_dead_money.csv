@@ -1,0 +1,13 @@
+
+    
+    
+    
+    create table "nfl_dead_money"."main"."spotrac_dead_money" ("player_id" text,"player_name" text,"position" text,"team" text,"year" integer,"dead_cap_hit" float8,"is_king" boolean)
+  ;
+    -- dbt seed --
+    
+          COPY "nfl_dead_money"."main"."spotrac_dead_money" FROM '/Users/andrewsmith/Documents/portfolio/nfl-dead-money/dbt/seeds/spotrac/spotrac_dead_money.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        
+
+;
+  

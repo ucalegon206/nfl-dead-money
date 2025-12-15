@@ -1,0 +1,10 @@
+nfl_dead_money:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: 'nfl_dead_money.duckdb'
+      schema: main
+      threads: 4
+      memory_limit: 4gb
+

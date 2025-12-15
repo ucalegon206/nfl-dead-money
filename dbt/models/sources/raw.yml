@@ -1,0 +1,13 @@
+# Raw data sources (CSV-based for now)
+
+version: 2
+
+sources:
+  - name: raw
+    description: Raw NFL dead money data sources
+    tables:
+      - name: team_dead_money_raw
+        description: Team-level dead money aggregates
+        
+      - name: player_dead_money_raw
+        description: Player-level dead money data

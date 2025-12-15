@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: spotrac
+    schema: main
+    tables:
+      - name: spotrac_team_cap
+        description: Spotrac team cap snapshot seeded from CSV
+        columns:
+          - name: team_name
+            tests: [not_null]
+          - name: team
+            tests: [not_null]
+          - name: year
+            tests: [not_null]
+          - name: dead_money_millions
+            tests: [not_null]
+            
+      - name: spotrac_dead_money
+        description: Spotrac player-level dead money data
+        columns:
+          - name: player_name
+            description: Player full name
+            tests: [not_null]
+          - name: team
+            description: NFL team code
+            tests: [not_null]
+          - name: year
+            description: NFL season year
+          - name: dead_cap_millions
+            description: Dead cap charge in millions
