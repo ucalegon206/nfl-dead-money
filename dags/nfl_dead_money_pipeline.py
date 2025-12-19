@@ -192,7 +192,13 @@ dbt_run_marts = BashOperator(
 )
 
 # Integrate snapshots into pipeline ordering: run snapshots before merge
-[team_cap_snapshot, player_rankings_backfill] >> stage_task >> staging_validation_task >> dbt_seed >> dbt_run_staging >> normalize_task >> dbt_run_marts >> scrape_task
+player_rankings_weekly = BashOperator(
+    task_id='snapshot_player_rankings_weekly',
+    bash_command=f'cd {PROJECT_ROOT} && ./.venv/bin/python scripts/player_rankings_snapshot.py --year {{ ds.strftime("%Y") }} --retries 3',
+    dag=dag,
+)
+
+[team_cap_snapshot, player_rankings_weekly, player_rankings_backfill] >> stage_task >> staging_validation_task >> dbt_seed >> dbt_run_staging >> normalize_task >> dbt_run_marts >> scrape_task
 
 
 if __name__ == "__main__":

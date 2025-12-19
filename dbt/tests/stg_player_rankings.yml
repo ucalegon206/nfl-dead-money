@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: stg_player_rankings
+    columns:
+      - name: player
+        tests:
+          - not_null
+      - name: cap_value
+        tests:
+          - not_null
+      - name: year
+        tests:
+          - not_null
