@@ -49,10 +49,10 @@ Notes:
 
 from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from airflow.operators.bash import BashOperator
 from airflow.models import Variable
 from airflow.exceptions import AirflowException
+from airflow.providers.standard.operators.bash import BashOperator
+from airflow.providers.standard.operators.python import PythonOperator
 import logging
 import os
 
@@ -60,7 +60,6 @@ from src.pipeline_tasks import scrape_rosters, merge_dead_money, run_data_qualit
 from src.pipeline_tasks import validate_staging
 from src.ingestion import stage_spotrac_team_cap, stage_spotrac_player_rankings, stage_spotrac_dead_money
 from src.normalization import normalize_team_cap, normalize_player_rankings, normalize_dead_money
-from airflow.operators.bash import BashOperator
 import os
 from pathlib import Path
 
@@ -105,7 +104,7 @@ dag = DAG(
     'nfl_dead_money_pipeline',
     default_args=DEFAULT_ARGS,
     description='Daily NFL dead money data collection and transformation',
-        schedule_interval='@weekly',  # Weekly schedule
+    schedule='@weekly',  # Weekly schedule
     catchup=False,
     tags=['nfl', 'dead-money', 'finance'],
 )
